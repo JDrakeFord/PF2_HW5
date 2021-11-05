@@ -53,7 +53,8 @@ private:
         Node *prev;
     };
     Node *head;
-    Node *prev;
+    Node *tail;
+    unsigned int size;
 
 };
 

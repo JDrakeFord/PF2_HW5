@@ -4,6 +4,9 @@
 using namespace std;
 int main() {
     Linkedlist a(20);
-    Linkedlist b = a;
+    a.check();
+    Linkedlist b;
+    b = a;
+    b.rcheck();
     return 0;
 }

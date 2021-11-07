@@ -121,7 +121,6 @@ void Linkedlist::rcheck() const {
     }
     std::cout << std::endl;
 }
-//TODO produces a double free() error
 Linkedlist &Linkedlist::operator=(const Linkedlist &l) {
     clear();
     if(l.empty())
@@ -131,14 +130,15 @@ Linkedlist &Linkedlist::operator=(const Linkedlist &l) {
     Node *iterRight = l.head;
     head = new Node;
     Node *iterLeft = head;
-    while(iterRight != NULL)
-    {
-        iterLeft -> data = iterRight -> data;
-        iterLeft -> next = new Node;
-        iterLeft -> next -> prev = iterLeft;
-        iterLeft = iterLeft -> next;
-        iterRight = iterRight -> next;
+    while(iterRight != NULL) {
+        iterLeft->data = iterRight->data;
+        iterLeft->next = new Node;
+        iterLeft->next->prev = iterLeft;
+        iterLeft = iterLeft->next;
+        iterRight = iterRight->next;
     }
+    tail = iterLeft -> prev;
+    tail -> next = NULL;
     return *this;
 }
 
@@ -161,8 +161,6 @@ void Linkedlist::insert(unsigned int pos, const element_type &x) {
         std::cout << "Pushing back x!" << std::endl;
         push_back(x);
     }
-
-
 }
 
 void Linkedlist::erase(unsigned int pos) {

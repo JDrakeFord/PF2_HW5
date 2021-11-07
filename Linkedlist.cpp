@@ -79,6 +79,7 @@ void Linkedlist::push_back(const element_type &x) {
         head -> data = x;
         head -> prev = NULL;
         head -> next = NULL;
+        tail = head;
     }
 }
 
@@ -211,6 +212,26 @@ void Linkedlist::erase(unsigned int pos) {
     }
 }
 
-void Linkedlist::sort() {
-
+void Linkedlist::swap(Linkedlist::Node *a, Linkedlist::Node *b) {
+    int temp;
+    temp = a -> data;
+    a -> data = b -> data;
+    b -> data = temp;
 }
+
+void Linkedlist::sort() {
+    Node *current = head;
+    bool swapped = false;
+    while(current -> next != NULL)
+    {
+        if(current -> next -> data < current -> data)
+        {
+            swap(current, current -> next);
+            swapped = true;
+        }
+        current = current -> next;
+    }
+    if(swapped)
+        sort();
+}
+

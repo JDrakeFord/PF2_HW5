@@ -7,6 +7,15 @@
 
 
 class Linkedlist {
+private:
+    struct Node{
+        int data;
+        Node *next;
+        Node *prev;
+    };
+    Node *head;
+    Node *tail;
+    unsigned int size;
 public:
     typedef int element_type;
     typedef element_type& reference;
@@ -46,16 +55,7 @@ public:
 // pos, the node at the end if any is removed.
     void erase(unsigned int pos);
 
-private:
-    struct Node{
-        int data;
-        Node *next;
-        Node *prev;
-    };
-    Node *head;
-    Node *tail;
-    unsigned int size;
-
+    void swap(Linkedlist::Node *a, Linkedlist::Node *b);
 };
 
 

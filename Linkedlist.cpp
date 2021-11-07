@@ -64,6 +64,14 @@ Linkedlist::reference Linkedlist::back() {
     return tail -> data;
 }
 
+Linkedlist::const_reference Linkedlist::front() const {
+    return head -> data;
+}
+
+Linkedlist::const_reference Linkedlist::back() const {
+    return tail -> data;
+}
+
 void Linkedlist::push_back(const element_type &x) {
     if(head != NULL)
     {
@@ -222,16 +230,16 @@ void Linkedlist::swap(Linkedlist::Node *a, Linkedlist::Node *b) {
 void Linkedlist::sort() {
     Node *current = head;
     bool swapped = false;
-    while(current -> next != NULL)
-    {
-        if(current -> next -> data < current -> data)
-        {
-            swap(current, current -> next);
+    while (current->next != NULL) {
+        if (current->next->data < current->data) {
+            swap(current, current->next);
             swapped = true;
         }
-        current = current -> next;
+        current = current->next;
     }
-    if(swapped)
+    if (swapped)
         sort();
 }
+
+
 

@@ -4,7 +4,9 @@
 #include "Linkedlist.h"
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 
+using namespace std;
 Linkedlist::Linkedlist() {
     head = NULL;
     tail = NULL;
@@ -103,24 +105,53 @@ void Linkedlist::pop_front(){
 }
 
 void Linkedlist::check() const {
-    Node *iter = head;
-    while(iter != NULL)
+    Node* current = head;
+    if (current == NULL)
+        cout << "It is an empty list!" << endl;
+    int i = 0;
+    while (current != NULL)
     {
-        std::cout << iter -> data << " ";
-        iter = iter -> next;
+        cout << "Node "
+             << setw(3) << i
+             << "   "
+             << "Elem: "
+             << setw(3) << current-> data << "   "
+             << "Address: "
+             << setw(8) << current
+             << "   "
+             << "Next Address: " << setw(8) << current->next << "   "
+             << "Prev Address: " << setw(8) << current->prev << "   "
+             << endl;
+        current = current->next;
+        i++;
     }
-    std::cout << std::endl;
+    cout << "------------------------------------------------------------------------------------------" << endl;
 }
 
 void Linkedlist::rcheck() const {
-    Node *iter = tail;
-    while(iter != NULL)
+    Node* current = tail;
+    if (current == NULL)
+        cout << "It is an empty list!" << endl;
+    int i = 0;
+    while (current != NULL)
     {
-        std::cout << iter -> data << " ";
-        iter = iter -> prev;
+        cout << "Node "
+             << setw(3) << i
+             << "   "
+             << "Elem: "
+             << setw(3) << current-> data << "   "
+             << "Address: "
+             << setw(8) << current
+             << "   "
+             << "Next Address: " << setw(8) << current->next << "   "
+             << "Prev Address: " << setw(8) << current->prev << "   "
+             << endl;
+        current = current->prev;
+        i++;
     }
-    std::cout << std::endl;
+    cout << "------------------------------------------------------------------------------------------" << endl;
 }
+
 Linkedlist &Linkedlist::operator=(const Linkedlist &l) {
     clear();
     if(l.empty())
@@ -161,6 +192,8 @@ void Linkedlist::insert(unsigned int pos, const element_type &x) {
         std::cout << "Pushing back x!" << std::endl;
         push_back(x);
     }
+
+
 }
 
 void Linkedlist::erase(unsigned int pos) {

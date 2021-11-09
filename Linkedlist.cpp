@@ -18,6 +18,7 @@ Linkedlist::Linkedlist(unsigned int n) {
     tail = NULL;
     head = new Node;
     Node *iter = head;
+    //Create the nodes
     for(int i = 0; i < n; i++)
     {
         iter -> data = i;
@@ -31,6 +32,7 @@ Linkedlist::Linkedlist(unsigned int n) {
 
 Linkedlist::~Linkedlist() {
     Node *del;
+    //Delete each node
     while(head != NULL)
     {
         del = head;
@@ -46,6 +48,7 @@ bool Linkedlist::empty() const {
 void Linkedlist::clear() {
     Node *iter = head;
     Node *del;
+    //Delete each node;
     while(iter != NULL)
     {
         del =  iter;
@@ -81,6 +84,7 @@ void Linkedlist::push_back(const element_type &x) {
         tail -> data = x;
         tail -> next = NULL;
     }
+    //If head is null, we need to create a node for head
     else
     {
         head = new Node;
@@ -100,19 +104,27 @@ void Linkedlist::push_front(const element_type &x) {
 }
 
 void Linkedlist::pop_back() {
-    Node *del = tail;
-    tail = tail -> prev;
-    delete del;
-    tail -> next = NULL;
+    if(!empty())
+    {
+        Node *del = tail;
+        tail = tail -> prev;
+        delete del;
+        tail -> next = NULL;
+    }
 }
 
 void Linkedlist::pop_front(){
-    Node *del = head;
-    head = head -> next;
-    delete del;
-    head -> prev = NULL;
+    if(!empty())
+    {
+        Node *del = head;
+        head = head -> next;
+        delete del;
+        head -> prev = NULL;
+    }
+
 }
 
+//Lab check function
 void Linkedlist::check() const {
     Node* current = head;
     if (current == NULL)
@@ -137,6 +149,7 @@ void Linkedlist::check() const {
     cout << "------------------------------------------------------------------------------------------" << endl;
 }
 
+//Lab rcheck() function
 void Linkedlist::rcheck() const {
     Node* current = tail;
     if (current == NULL)
@@ -163,13 +176,16 @@ void Linkedlist::rcheck() const {
 
 Linkedlist &Linkedlist::operator=(const Linkedlist &l) {
     clear();
+    //return the empty list if l is empty
     if(l.empty())
     {
         return *this;
     }
+    //Create iterator nodes for each list
     Node *iterRight = l.head;
     head = new Node;
     Node *iterLeft = head;
+    //Copy nodes
     while(iterRight != NULL) {
         iterLeft->data = iterRight->data;
         iterLeft->next = new Node;
@@ -183,12 +199,15 @@ Linkedlist &Linkedlist::operator=(const Linkedlist &l) {
 }
 
 void Linkedlist::insert(unsigned int pos, const element_type &x) {
+    //If it isn't empty
     if(head != NULL)
     {
+        //Find the node to insert
         Node *iter = head;
         for (int i = 0; i <= pos && iter->next != NULL; i++) {
             iter = iter->next;
         }
+        //Insert
         Node *temp = new Node;
         temp->data = x;
         temp->prev = iter;
@@ -196,9 +215,9 @@ void Linkedlist::insert(unsigned int pos, const element_type &x) {
         iter->next = temp;
         temp->next->prev = temp;
     }
+    //If it is empty, we can just call push_back(x)
     else
     {
-        std::cout << "Pushing back x!" << std::endl;
         push_back(x);
     }
 
@@ -206,20 +225,23 @@ void Linkedlist::insert(unsigned int pos, const element_type &x) {
 }
 
 void Linkedlist::erase(unsigned int pos) {
+    //Do nothing if it is already clear
     if(head != NULL)
     {
+        //Find node to erase
         Node *iter = head;
         for(int i = 0; i < pos - 1 && iter -> next != NULL; i++)
         {
             iter = iter -> next;
         }
+        //Erase
         Node *del = iter -> next;
         iter -> next = iter -> next -> next;
         iter -> next -> prev = iter;
         delete del;
     }
 }
-
+//Helper function for sort
 void Linkedlist::swap(Linkedlist::Node *a, Linkedlist::Node *b) {
     int temp;
     temp = a -> data;
@@ -227,16 +249,23 @@ void Linkedlist::swap(Linkedlist::Node *a, Linkedlist::Node *b) {
     b -> data = temp;
 }
 
+//Linked list bubble sort implementation
 void Linkedlist::sort() {
     Node *current = head;
     bool swapped = false;
+    int pos = 0;
+    //Go through the list
     while (current->next != NULL) {
-        if (current->next->data < current->data) {
+        //If they need to be swapped
+        if (current->next->data > current->data) {
+            //swap them
             swap(current, current->next);
             swapped = true;
         }
         current = current->next;
+        pos++;
     }
+    //If we just performed a swap, we sort again
     if (swapped)
         sort();
 }
